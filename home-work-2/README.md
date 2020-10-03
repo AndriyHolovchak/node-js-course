@@ -55,3 +55,7 @@
 ## node non-block-loop-api
 
 ### The same non-blocking​ api
+
+## cluster.js
+
+### recreated code from presentations
