@@ -71,3 +71,11 @@
 ### Expected result:
 
     Count of handled requests {"worker_[pid]": [count], ...}
+
+## node fibonacci.js
+
+### ​Expected result:
+
+    fib(8) = 21
+    fib(13) = 233
+    fib(21) = 10946
