@@ -59,3 +59,15 @@
 ## cluster.js
 
 ### recreated code from presentations
+
+## node calculate-worker-requests.js
+
+#### It will create cluster with 6 workers and run small server with api to calculate how many requests handled each worker.
+
+### node performs-calls.js
+
+#### it runs script that performs 100 calls to this server
+
+### Expected result:
+
+    Count of handled requests {"worker_[pid]": [count], ...}
