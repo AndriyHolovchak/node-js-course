@@ -28,3 +28,22 @@
     nextTick
     immediate 3
     immediate 4
+
+## node next-tick-inside-promise.js
+
+### Expected result:
+
+    next tick 1
+    next tick 2
+    next tick 3
+    promise 1 resolved
+    promise 2 resolved
+    promise 3 resolved
+    promise 4 resolved
+    promise 5 resolved
+    next tick inside promise
+    set timeout
+    set immediate 1
+    set immediate 2
+    set immediate 3
+    set immediate 4
