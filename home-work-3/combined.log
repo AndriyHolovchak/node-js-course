@@ -1,0 +1,36 @@
+{"message":"test","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"Unhandled Rejection at Promise","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"Unhandled Rejection at Promise","level":"error"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[7bbad8d3-d838-4fbc-a68d-8a3869e143a9] Start processing","level":"info"}
+{"message":"Unhandled Rejection at Promise","level":"error"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[28083946-e19d-40d4-9bdc-29a62dd5c098] Start processing","level":"info"}
+{"message":"[a123bfff-0f42-43db-8079-86a369e112d5] Start processing","level":"info"}
+{"message":"[0e820cbe-d1db-4b60-aeab-21fa23bc32a0] Start processing","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[86419c25-32f0-42bb-98b0-048d3cc53ed8] Start processing","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[a751054d-d228-450a-9220-3d19bc152b3d] Start processing","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[be26eb8b-34ad-45fa-9cea-783499b27281] Start processing","level":"info"}
+{"message":"event not found","level":"error"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[1155c30b-6f61-46ac-8b5a-84f57a78416a] Start processing get /events","level":"info"}
+{"message":"[1155c30b-6f61-46ac-8b5a-84f57a78416a] event not found","level":"error"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[fb69ebd8-8d5d-4712-855b-e7831ac83805] Start processing get /events/44","level":"info"}
+{"message":"[fb69ebd8-8d5d-4712-855b-e7831ac83805] event not found","level":"error"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[c3da00ca-a172-4dda-b05c-96c624b42b94] Start processing get /events/44","level":"info"}
+{"message":"server start at port 3000","level":"info"}
+{"message":"[89cbf716-04ee-48b0-842b-f7cae2664d58] Start processing get /events/44","level":"info"}
+{"message":"[89cbf716-04ee-48b0-842b-f7cae2664d58] event not found","level":"error"}
+{"message":"[bf054359-3150-430e-92ad-3920ae637a00] Start processing get /events/44","level":"info"}
+{"message":"[bf054359-3150-430e-92ad-3920ae637a00] event not found","level":"error"}

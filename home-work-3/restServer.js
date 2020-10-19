@@ -3,7 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const stream = require('stream');
 const fs = require('fs');
-const { log } = require('../logger');
+const { AsyncLocalStorage } = require('async_hooks');
+const { v4: uuidv4 } = require('uuid');
+const { createLogger, transports } = require('winston');
+
 const {
 	getEventsJson,
 	addNewEvent,
@@ -13,44 +16,87 @@ const {
 
 const fileName = 'events.csv';
 
+const asyncLocalStorage = new AsyncLocalStorage();
+
+const logger = createLogger({
+	transports: [
+		new transports.Console(),
+		new transports.File({ filename: 'combined.log' }),
+	],
+	rejectionHandlers: [new transports.File({ filename: 'rejections.log' })],
+});
+
+const log = (message) => {
+	const requestId = asyncLocalStorage.getStore();
+
+	if (requestId) {
+		logger.info(`[${requestId}] ${message}`);
+	} else {
+		logger.info(message);
+	}
+};
+
+const logError = (message) => {
+	const requestId = asyncLocalStorage.getStore();
+
+	if (requestId) {
+		logger.error(`[${requestId}] ${message}`);
+	} else {
+		logger.error(message);
+	}
+};
+
 app.use(bodyParser.json());
 
 app.get('/events', async (req, res, next) => {
 	const location = req.query.location;
 
-	try {
-		const events = await getEventsJson(fileName);
+	const requestId = uuidv4();
 
-		if (location) {
-			return res.json(
-				events.filter(
-					({ location: eventLocation }) =>
-						eventLocation.toLowerCase() === location.toLowerCase(),
-				),
-			);
+	asyncLocalStorage.run(requestId, async () => {
+		log('Start processing get /events');
+		try {
+			const events = await getEventsJson(fileName);
+
+			if (location) {
+				return res.json(
+					events.filter(
+						({ location: eventLocation }) =>
+							eventLocation.toLowerCase() === location.toLowerCase(),
+					),
+				);
+			}
+
+			res.json(events);
+		} catch (error) {
+			logError(error);
+			res.sendStatus(400);
 		}
-
-		res.json(events);
-	} catch (error) {
-		res.sendStatus(400);
-	}
+	});
 });
 
 app.get('/events/:eventId', async (req, res) => {
-	const eventId = req.params.eventId;
+	const requestId = uuidv4();
 
-	try {
-		const events = await getEventsJson(fileName);
-		const [event] = events.filter(({ id }) => id.toString() === eventId);
+	asyncLocalStorage.run(requestId, async () => {
+		const eventId = req.params.eventId;
+		log(`Start processing get /events/${eventId}`);
 
-		if (!event) {
-			return res.sendStatus(404);
+		try {
+			const events = await getEventsJson(fileName);
+			const [event] = events.filter(({ id }) => id.toString() === eventId);
+
+			if (!event) {
+				logError('event not found');
+				return res.sendStatus(404);
+			}
+
+			res.json(event);
+		} catch (error) {
+			logError(error);
+			res.sendStatus(404);
 		}
-
-		res.json(event);
-	} catch (error) {
-		res.sendStatus(404);
-	}
+	});
 });
 
 app.post('/events', async (req, res, next) => {
@@ -69,6 +115,7 @@ app.post('/events', async (req, res, next) => {
 		await addNewEvent(fileName, events, newEvent);
 		res.json(newEvent);
 	} catch (error) {
+		logError(error);
 		res.sendStatus(400);
 	}
 });
@@ -90,6 +137,7 @@ app.put('/events/:eventId', async (req, res) => {
 		await updateEvent(fileName, eventId, events, event);
 		res.json(event);
 	} catch (error) {
+		logError(error);
 		res.sendStatus(400);
 	}
 });
@@ -109,3 +157,11 @@ app.get('/events-batch', async (req, res) => {
 app.listen(3000, () => {
 	log('server start at port 3000');
 });
+
+process
+	.on('unhandledRejection', () => {
+		logError('Unhandled Rejection at Promise');
+	})
+	.on('uncaughtException', () => {
+		logError('Uncaught Exception thrown');
+	});
