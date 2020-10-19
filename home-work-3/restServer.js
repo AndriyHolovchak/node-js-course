@@ -5,7 +5,7 @@ const stream = require('stream');
 const fs = require('fs');
 const { AsyncLocalStorage } = require('async_hooks');
 const { v4: uuidv4 } = require('uuid');
-const { createLogger, transports } = require('winston');
+const { createLogger, transports, format } = require('winston');
 
 const {
 	getEventsJson,
@@ -18,32 +18,38 @@ const fileName = 'events.csv';
 
 const asyncLocalStorage = new AsyncLocalStorage();
 
+const { combine, timestamp, json } = format;
+
 const logger = createLogger({
+	format: combine(timestamp(), json()),
 	transports: [
 		new transports.Console(),
+		new transports.File({ filename: 'errors.log', level: 'error' }),
 		new transports.File({ filename: 'combined.log' }),
 	],
 	rejectionHandlers: [new transports.File({ filename: 'rejections.log' })],
 });
 
 const log = (message) => {
-	const requestId = asyncLocalStorage.getStore();
+	const req = asyncLocalStorage.getStore();
 
-	if (requestId) {
-		logger.info(`[${requestId}] ${message}`);
-	} else {
-		logger.info(message);
-	}
+	logger.info({
+		message,
+		requestId: req?.id,
+		hostname: req?.hostname,
+		url: req?.url,
+	});
 };
 
 const logError = (message) => {
-	const requestId = asyncLocalStorage.getStore();
+	const req = asyncLocalStorage.getStore();
 
-	if (requestId) {
-		logger.error(`[${requestId}] ${message}`);
-	} else {
-		logger.error(message);
-	}
+	logger.error({
+		message,
+		requestId: req?.id,
+		hostname: req?.hostname,
+		url: req?.url,
+	});
 };
 
 app.use(bodyParser.json());
@@ -51,10 +57,11 @@ app.use(bodyParser.json());
 app.get('/events', async (req, res, next) => {
 	const location = req.query.location;
 
-	const requestId = uuidv4();
+	req.id = uuidv4();
 
-	asyncLocalStorage.run(requestId, async () => {
-		log('Start processing get /events');
+	asyncLocalStorage.run(req, async () => {
+		log('Start processing');
+
 		try {
 			const events = await getEventsJson(fileName);
 
@@ -76,11 +83,11 @@ app.get('/events', async (req, res, next) => {
 });
 
 app.get('/events/:eventId', async (req, res) => {
-	const requestId = uuidv4();
+	req.id = uuidv4();
 
-	asyncLocalStorage.run(requestId, async () => {
+	asyncLocalStorage.run(req, async () => {
 		const eventId = req.params.eventId;
-		log(`Start processing get /events/${eventId}`);
+		log('Start processing');
 
 		try {
 			const events = await getEventsJson(fileName);

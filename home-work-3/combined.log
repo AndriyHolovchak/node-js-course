@@ -1,36 +1,22 @@
-{"message":"test","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"Unhandled Rejection at Promise","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"Unhandled Rejection at Promise","level":"error"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[7bbad8d3-d838-4fbc-a68d-8a3869e143a9] Start processing","level":"info"}
-{"message":"Unhandled Rejection at Promise","level":"error"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[28083946-e19d-40d4-9bdc-29a62dd5c098] Start processing","level":"info"}
-{"message":"[a123bfff-0f42-43db-8079-86a369e112d5] Start processing","level":"info"}
-{"message":"[0e820cbe-d1db-4b60-aeab-21fa23bc32a0] Start processing","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[86419c25-32f0-42bb-98b0-048d3cc53ed8] Start processing","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[a751054d-d228-450a-9220-3d19bc152b3d] Start processing","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[be26eb8b-34ad-45fa-9cea-783499b27281] Start processing","level":"info"}
-{"message":"event not found","level":"error"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[1155c30b-6f61-46ac-8b5a-84f57a78416a] Start processing get /events","level":"info"}
-{"message":"[1155c30b-6f61-46ac-8b5a-84f57a78416a] event not found","level":"error"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[fb69ebd8-8d5d-4712-855b-e7831ac83805] Start processing get /events/44","level":"info"}
-{"message":"[fb69ebd8-8d5d-4712-855b-e7831ac83805] event not found","level":"error"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[c3da00ca-a172-4dda-b05c-96c624b42b94] Start processing get /events/44","level":"info"}
-{"message":"server start at port 3000","level":"info"}
-{"message":"[89cbf716-04ee-48b0-842b-f7cae2664d58] Start processing get /events/44","level":"info"}
-{"message":"[89cbf716-04ee-48b0-842b-f7cae2664d58] event not found","level":"error"}
-{"message":"[bf054359-3150-430e-92ad-3920ae637a00] Start processing get /events/44","level":"info"}
-{"message":"[bf054359-3150-430e-92ad-3920ae637a00] event not found","level":"error"}
+{"message":"Start processing","requestId":"9b3a9d5c-c228-470f-a09b-8ff13a49260f","hostname":"localhost","url":"/events/334","level":"info","timestamp":"2020-10-19T19:37:31.769Z"}
+{"message":"event not found","requestId":"9b3a9d5c-c228-470f-a09b-8ff13a49260f","hostname":"localhost","url":"/events/334","level":"error","timestamp":"2020-10-19T19:37:31.772Z"}
+{"message":"server start at port 3000","level":"info","timestamp":"2020-10-19T19:39:30.015Z"}
+{"message":"Start processing","requestId":"368be88c-35be-44ae-9655-c0f06903f57e","hostname":"localhost","url":"/events/334","level":"info","timestamp":"2020-10-19T19:39:35.658Z"}
+{"message":"event not found","requestId":"368be88c-35be-44ae-9655-c0f06903f57e","hostname":"localhost","url":"/events/334","level":"error","timestamp":"2020-10-19T19:39:35.661Z"}
+{"message":"Start processing","requestId":"71307c15-e44a-4bec-8f57-0c1def02ce43","hostname":"localhost","url":"/events","level":"info","timestamp":"2020-10-19T19:39:42.967Z"}
+{"message":"Start processing","requestId":"fefb3459-3f98-4509-9f1d-18c3f7904b9c","hostname":"localhost","url":"/events","level":"info","timestamp":"2020-10-19T19:39:43.569Z"}
+{"message":"Start processing","requestId":"07775b2e-9e50-45e3-b744-8ae32a588b0c","hostname":"localhost","url":"/events","level":"info","timestamp":"2020-10-19T19:39:46.538Z"}
+{"message":"Start processing","requestId":"274bac3e-e7d6-419f-81f7-d5736c927631","hostname":"localhost","url":"/events/vd","level":"info","timestamp":"2020-10-19T19:40:04.030Z"}
+{"message":"event not found","requestId":"274bac3e-e7d6-419f-81f7-d5736c927631","hostname":"localhost","url":"/events/vd","level":"error","timestamp":"2020-10-19T19:40:04.032Z"}
+{"message":"Start processing","requestId":"b494b684-14f7-4af0-ac15-e9f31e688b33","hostname":"localhost","url":"/events/vd","level":"info","timestamp":"2020-10-19T19:40:05.078Z"}
+{"message":"event not found","requestId":"b494b684-14f7-4af0-ac15-e9f31e688b33","hostname":"localhost","url":"/events/vd","level":"error","timestamp":"2020-10-19T19:40:05.079Z"}
+{"message":"Start processing","requestId":"07f52549-cff1-4651-abe1-8ec10fbc3183","hostname":"localhost","url":"/events","level":"info","timestamp":"2020-10-19T19:40:08.591Z"}
+{"message":"Start processing","requestId":"fd8f8021-00fa-4604-8142-ea6b355607d8","hostname":"localhost","url":"/events","level":"info","timestamp":"2020-10-19T19:40:10.447Z"}
+{"message":"Start processing","requestId":"0310b1c1-a47f-418d-85d2-e947e7da3621","hostname":"localhost","url":"/events/vdf","level":"info","timestamp":"2020-10-19T19:40:22.971Z"}
+{"message":"event not found","requestId":"0310b1c1-a47f-418d-85d2-e947e7da3621","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:22.973Z"}
+{"message":"Start processing","requestId":"6fa952f7-0f5d-4e9e-8fe9-cd736c1ddfa8","hostname":"localhost","url":"/events/vdf","level":"info","timestamp":"2020-10-19T19:40:23.505Z"}
+{"message":"event not found","requestId":"6fa952f7-0f5d-4e9e-8fe9-cd736c1ddfa8","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:23.509Z"}
+{"message":"Start processing","requestId":"76da49bd-9c08-4359-ad8d-5236e4491c5f","hostname":"localhost","url":"/events/vdf","level":"info","timestamp":"2020-10-19T19:40:24.098Z"}
+{"message":"event not found","requestId":"76da49bd-9c08-4359-ad8d-5236e4491c5f","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:24.099Z"}
+{"message":"Start processing","requestId":"e9fff7c5-6216-49e6-b6da-7ae9a4d4ac69","hostname":"localhost","url":"/events/vdf","level":"info","timestamp":"2020-10-19T19:40:24.652Z"}
+{"message":"event not found","requestId":"e9fff7c5-6216-49e6-b6da-7ae9a4d4ac69","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:24.653Z"}
