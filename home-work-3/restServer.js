@@ -18,6 +18,13 @@ const fileName = 'events.csv';
 
 const asyncLocalStorage = new AsyncLocalStorage();
 
+const requestIdMiddleware = (req, res, next) => {
+	asyncLocalStorage.run(req, () => {
+		req.requestId = uuidv4();
+		next();
+	});
+};
+
 const { combine, timestamp, json } = format;
 
 const logger = createLogger({
@@ -35,8 +42,9 @@ const log = (message) => {
 
 	logger.info({
 		message,
-		requestId: req?.id,
+		requestId: req?.requestId,
 		hostname: req?.hostname,
+		method: req?.method,
 		url: req?.url,
 	});
 };
@@ -46,64 +54,54 @@ const logError = (message) => {
 
 	logger.error({
 		message,
-		requestId: req?.id,
+		requestId: req?.requestId,
 		hostname: req?.hostname,
 		url: req?.url,
 	});
 };
 
-app.use(bodyParser.json());
+app.use([bodyParser.json(), requestIdMiddleware]);
 
 app.get('/events', async (req, res, next) => {
 	const location = req.query.location;
 
-	req.id = uuidv4();
+	try {
+		const events = await getEventsJson(fileName);
 
-	asyncLocalStorage.run(req, async () => {
-		log('Start processing');
-
-		try {
-			const events = await getEventsJson(fileName);
-
-			if (location) {
-				return res.json(
-					events.filter(
-						({ location: eventLocation }) =>
-							eventLocation.toLowerCase() === location.toLowerCase(),
-					),
-				);
-			}
-
-			res.json(events);
-		} catch (error) {
-			logError(error);
-			res.sendStatus(400);
+		if (location) {
+			return res.json(
+				events.filter(
+					({ location: eventLocation }) =>
+						eventLocation.toLowerCase() === location.toLowerCase(),
+				),
+			);
 		}
-	});
+
+		res.json(events);
+	} catch (error) {
+		logError(error);
+		res.sendStatus(400);
+	}
 });
 
 app.get('/events/:eventId', async (req, res) => {
-	req.id = uuidv4();
+	const eventId = req.params.eventId;
+	log('Start processing');
 
-	asyncLocalStorage.run(req, async () => {
-		const eventId = req.params.eventId;
-		log('Start processing');
+	try {
+		const events = await getEventsJson(fileName);
+		const [event] = events.filter(({ id }) => id.toString() === eventId);
 
-		try {
-			const events = await getEventsJson(fileName);
-			const [event] = events.filter(({ id }) => id.toString() === eventId);
-
-			if (!event) {
-				logError('event not found');
-				return res.sendStatus(404);
-			}
-
-			res.json(event);
-		} catch (error) {
-			logError(error);
-			res.sendStatus(404);
+		if (!event) {
+			logError('event not found');
+			return res.sendStatus(404);
 		}
-	});
+
+		res.json(event);
+	} catch (error) {
+		logError(error);
+		res.sendStatus(404);
+	}
 });
 
 app.post('/events', async (req, res, next) => {
