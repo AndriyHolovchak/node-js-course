@@ -1,8 +1,0 @@
-{"message":"event not found","requestId":"9b3a9d5c-c228-470f-a09b-8ff13a49260f","hostname":"localhost","url":"/events/334","level":"error","timestamp":"2020-10-19T19:37:31.772Z"}
-{"message":"event not found","requestId":"368be88c-35be-44ae-9655-c0f06903f57e","hostname":"localhost","url":"/events/334","level":"error","timestamp":"2020-10-19T19:39:35.661Z"}
-{"message":"event not found","requestId":"274bac3e-e7d6-419f-81f7-d5736c927631","hostname":"localhost","url":"/events/vd","level":"error","timestamp":"2020-10-19T19:40:04.032Z"}
-{"message":"event not found","requestId":"b494b684-14f7-4af0-ac15-e9f31e688b33","hostname":"localhost","url":"/events/vd","level":"error","timestamp":"2020-10-19T19:40:05.079Z"}
-{"message":"event not found","requestId":"0310b1c1-a47f-418d-85d2-e947e7da3621","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:22.973Z"}
-{"message":"event not found","requestId":"6fa952f7-0f5d-4e9e-8fe9-cd736c1ddfa8","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:23.509Z"}
-{"message":"event not found","requestId":"76da49bd-9c08-4359-ad8d-5236e4491c5f","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:24.099Z"}
-{"message":"event not found","requestId":"e9fff7c5-6216-49e6-b6da-7ae9a4d4ac69","hostname":"localhost","url":"/events/vdf","level":"error","timestamp":"2020-10-19T19:40:24.653Z"}
