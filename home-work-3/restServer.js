@@ -3,7 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const stream = require('stream');
 const fs = require('fs');
-const { log } = require('../logger');
+const { AsyncLocalStorage } = require('async_hooks');
+const { v4: uuidv4 } = require('uuid');
+const { createLogger, transports, format } = require('winston');
+
 const {
 	getEventsJson,
 	addNewEvent,
@@ -13,7 +16,51 @@ const {
 
 const fileName = 'events.csv';
 
-app.use(bodyParser.json());
+const asyncLocalStorage = new AsyncLocalStorage();
+
+const requestIdMiddleware = (req, res, next) => {
+	asyncLocalStorage.run(req, () => {
+		req.requestId = uuidv4();
+		next();
+	});
+};
+
+const { combine, timestamp, json } = format;
+
+const logger = createLogger({
+	format: combine(timestamp(), json()),
+	transports: [
+		new transports.Console(),
+		new transports.File({ filename: 'errors.log', level: 'error' }),
+		new transports.File({ filename: 'combined.log' }),
+	],
+	rejectionHandlers: [new transports.File({ filename: 'rejections.log' })],
+});
+
+const log = (message) => {
+	const req = asyncLocalStorage.getStore();
+
+	logger.info({
+		message,
+		requestId: req?.requestId,
+		hostname: req?.hostname,
+		method: req?.method,
+		url: req?.url,
+	});
+};
+
+const logError = (message) => {
+	const req = asyncLocalStorage.getStore();
+
+	logger.error({
+		message,
+		requestId: req?.requestId,
+		hostname: req?.hostname,
+		url: req?.url,
+	});
+};
+
+app.use([bodyParser.json(), requestIdMiddleware]);
 
 app.get('/events', async (req, res, next) => {
 	const location = req.query.location;
@@ -32,23 +79,27 @@ app.get('/events', async (req, res, next) => {
 
 		res.json(events);
 	} catch (error) {
+		logError(error);
 		res.sendStatus(400);
 	}
 });
 
 app.get('/events/:eventId', async (req, res) => {
 	const eventId = req.params.eventId;
+	log('Start processing');
 
 	try {
 		const events = await getEventsJson(fileName);
 		const [event] = events.filter(({ id }) => id.toString() === eventId);
 
 		if (!event) {
+			logError('event not found');
 			return res.sendStatus(404);
 		}
 
 		res.json(event);
 	} catch (error) {
+		logError(error);
 		res.sendStatus(404);
 	}
 });
@@ -69,6 +120,7 @@ app.post('/events', async (req, res, next) => {
 		await addNewEvent(fileName, events, newEvent);
 		res.json(newEvent);
 	} catch (error) {
+		logError(error);
 		res.sendStatus(400);
 	}
 });
@@ -90,6 +142,7 @@ app.put('/events/:eventId', async (req, res) => {
 		await updateEvent(fileName, eventId, events, event);
 		res.json(event);
 	} catch (error) {
+		logError(error);
 		res.sendStatus(400);
 	}
 });
@@ -109,3 +162,11 @@ app.get('/events-batch', async (req, res) => {
 app.listen(3000, () => {
 	log('server start at port 3000');
 });
+
+process
+	.on('unhandledRejection', () => {
+		logError('Unhandled Rejection at Promise');
+	})
+	.on('uncaughtException', () => {
+		logError('Uncaught Exception thrown');
+	});
