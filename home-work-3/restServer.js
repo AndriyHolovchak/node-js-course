@@ -14,6 +14,8 @@ const {
 	convertCSVToJSON,
 } = require('./utils');
 
+const db = require('./models');
+
 const fileName = 'events.csv';
 
 const asyncLocalStorage = new AsyncLocalStorage();
@@ -61,6 +63,11 @@ const logError = (message) => {
 };
 
 app.use([bodyParser.json(), requestIdMiddleware]);
+
+db.sequelize.sync();
+
+require('./routes/user.routes')(app);
+require('./routes/event.routes')(app);
 
 app.get('/events', async (req, res, next) => {
 	const location = req.query.location;
